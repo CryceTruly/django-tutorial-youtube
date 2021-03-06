@@ -1,0 +1,46 @@
+{% extends "_partials/base.html" %}  {% load static %}
+
+
+{% block content %}
+
+<div class="ui grid">
+  <div class="four wide column"></div>
+  <div class="eight wide column">
+    <div class="ui middle aligned center aligned grid">
+      <div class="column mt-5">
+        <h2 class="ui teal image header">
+          <img src={% static 'img/Logo.png' %} class="image" />
+          <div class="content">Log-in</div>
+        </h2>
+
+          {% include '_partials/messages.html'%}
+
+        <form class="ui large form" method="post" action={% url 'login' %}>
+        {% csrf_token %}
+        
+          <div class="ui stacked segment">
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input type="text" required name="username" placeholder="Username" value="{{ data.username }}" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input type="password" required name="password" placeholder="Password" />
+              </div>
+            </div>
+            <button class="ui fluid large teal submit button">Login</button>
+          </div>
+
+        </form>
+
+        <div class="ui message">Dont have an account? <a href={% url 'register'  %}>Signup</a></div>
+        
+      </div>
+    </div>
+    <div class="four wide column"></div>
+  </div>
+  {% endblock content %}
+</div>
