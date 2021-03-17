@@ -40,7 +40,8 @@ def send_activation_email(user, request):
                          to=[user.email]
                          )
 
-    EmailThread(email).start()
+    if not settings.TESTING:
+        EmailThread(email).start()
 
 
 @auth_user_should_not_access
@@ -77,10 +78,14 @@ def register(request):
                                  'Username is taken, choose another one')
             context['has_error'] = True
 
+            return render(request, 'authentication/register.html', context, status=409)
+
         if User.objects.filter(email=email).exists():
             messages.add_message(request, messages.ERROR,
                                  'Email is taken, choose another one')
             context['has_error'] = True
+
+            return render(request, 'authentication/register.html', context, status=409)
 
         if context['has_error']:
             return render(request, 'authentication/register.html', context)
@@ -89,11 +94,13 @@ def register(request):
         user.set_password(password)
         user.save()
 
-        send_activation_email(user, request)
+        if not context['has_error']:
 
-        messages.add_message(request, messages.SUCCESS,
-                             'We sent you an email to verify your account')
-        return redirect('login')
+            send_activation_email(user, request)
+
+            messages.add_message(request, messages.SUCCESS,
+                                 'We sent you an email to verify your account')
+            return redirect('login')
 
     return render(request, 'authentication/register.html')
 
@@ -108,15 +115,15 @@ def login_user(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if not user.is_email_verified:
+        if user and not user.is_email_verified:
             messages.add_message(request, messages.ERROR,
                                  'Email is not verified, please check your email inbox')
-            return render(request, 'authentication/login.html', context)
+            return render(request, 'authentication/login.html', context, status=401)
 
         if not user:
             messages.add_message(request, messages.ERROR,
-                                 'invalid credentials')
-            return render(request, 'authentication/login.html', context)
+                                 'Invalid credentials, try again')
+            return render(request, 'authentication/login.html', context, status=401)
 
         login(request, user)
 

@@ -1,0 +1,21 @@
+{% extends 'admin/base.html' %}
+{%load static %}
+
+{% block branding %}
+
+<div style="display: flex; flex-direction: row; align-items: center;">
+
+
+
+<img class="logo" height="40px" class="logo" src= {% static 'img/Logo.png' %} />
+<h1 id="site-name" style="padding-left: 10px;"><a href="{% url 'admin:index' %}"> Administration</a></h1>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+
+
+<link rel="stylesheet" href={% static 'css/admin/admin.css' %}>
+
+
+{% endblock %}
