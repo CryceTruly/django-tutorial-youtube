@@ -1,1 +1,1 @@
-# django-tutorial-youtube
+[![Python application](https://github.com/CryceTruly/django-tutorial-youtube/actions/workflows/python-app.yml/badge.svg)](https://github.com/CryceTruly/django-tutorial-youtube/actions/workflows/python-app.yml) [![codecov](https://codecov.io/gh/CryceTruly/django-tutorial-youtube/branch/main/graph/badge.svg?token=X4KFP1OP6Y)](https://codecov.io/gh/CryceTruly/django-tutorial-youtube)
