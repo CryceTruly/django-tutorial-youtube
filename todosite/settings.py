@@ -137,6 +137,7 @@ EMAIL_PORT = 587
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'todosite/static')]
 
 django_heroku.settings(locals())
