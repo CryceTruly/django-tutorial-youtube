@@ -33,6 +33,8 @@ jobs:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_PORT: ${{ secrets.DB_PORT }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_ENGINE: ${{secrets.DB_ENGINE}}
           
       run: |
         python manage.py test
