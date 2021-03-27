@@ -52,6 +52,7 @@ jobs:
         DB_ENGINE: ${{secrets.DB_ENGINE}}
           
       run: |
+        python manage.py collectstatic --no-input
         coverage run manage.py test && coverage report --fail-under=75 && coverage xml
 
 
