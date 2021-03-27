@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import sys
-
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'todosite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         "PASSWORD": os.environ.get('DB_PASSWORD'),
@@ -135,9 +135,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'todosite/static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
+
